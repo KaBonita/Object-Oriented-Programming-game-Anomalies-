@@ -1,6 +1,20 @@
 import time
 import random
 import sys
+import pygame
+
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+pygame.display.set_caption('AnomalEEE')
+
+Color_Background = (15, 15, 18)
+Color_Title = (220, 50, 50)
+Color_Text = (200, 200, 200)
+
+font_title = pygame.font.SysFont('arial', 48, bold=True)
+font_buttons = pygame.font.SysFont('arial', 28)
+font_subtitles = pygame.font.SysFont('arial', 18, italic=True)
+
 
 START_SANITY = 100
 ACTION_COST = 5
