@@ -77,6 +77,10 @@ def main_menu():
         instructions_button.draw(screen)
         quit_button.draw(screen)
 
+        pygame.display.flip()
+        clock = pygame.time.Clock
+        clock.tick(60)
+        
 if __name__ == '__main__':
     main_menu()
 
