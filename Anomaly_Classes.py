@@ -19,71 +19,6 @@ font_title = pygame.font.SysFont('arial', 48, bold=True)
 font_buttons = pygame.font.SysFont('arial', 28)
 font_subtitles = pygame.font.SysFont('arial', 18, italic=True)
 
-# button class
-class Button:
-    def __init__(self, text, x, y, width, height):
-        self.text = text
-        self.rect = pygame.Rect(x, y, width, height)
-
-    def draw(self, surface):
-        text_surface = font_buttons.render(self.text, True, Color_Text)
-        text_rectangle = text_surface.get_rect(center=self.rect.center)
-        pygame.draw.rect(surface, Color_Text, self.rect, 2, border_radius=4)
-        surface.blit(text_surface, text_rectangle)
-
-    def is_clicked(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.rect.collidepoint(event.pos):
-                return True
-        return False
-
-# main menu function
-def main_menu():
-    button_width, button_height = 250, 50
-    center = 800 // 2 - button_width // 2
-
-    # menu buttons
-    start_button = Button('START GAME', center, 280, button_width, button_height)
-    instructions_button = Button('INSTRUCTIONS', center, 350, button_width, button_height)
-    quit_button = Button('QUIT GAME', center, 420, button_width, button_height)
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-
-            if start_button.is_clicked(event):
-                print('Welcome to AnomalEEE...')
-
-            if instructions_button.is_clicked(event):
-                print('Opening Instructions Screen...')
-
-            if quit_button.is_clicked(event):
-                pygame.quit()
-                sys.exit()
-
-        # drawing      
-        screen.fill(Color_Background)
-        title_surface = font_title.render('AnomalEEE', True, Color_Title)
-        title_rectangle = title_surface.get_rect(center=(screen_width // 2, 150))
-        screen.blit(title_surface, title_rectangle)
-
-        subtitle_surface = font_subtitles.render('Verify who enters. Protect your sanity.', True, (120, 120, 130))
-        subtitle_rectangle = subtitle_surface.get_rect(center = (screen_width // 2, 205))
-        screen.blit(subtitle_surface, subtitle_rectangle)
-
-        start_button.draw(screen)
-        instructions_button.draw(screen)
-        quit_button.draw(screen)
-
-        pygame.display.flip()
-        clock = pygame.time.Clock()
-        clock.tick(60)
-        
-if __name__ == '__main__':
-    main_menu()
-
 
 START_SANITY = 100
 ACTION_COST = 5
@@ -451,7 +386,73 @@ class Ghouster(Individual):
             }, anomaly_id=anomaly_id,)
 
 
+# button class
+class Button:
+    def __init__(self, text, x, y, width, height):
+        self.text = text
+        self.rect = pygame.Rect(x, y, width, height)
 
+    def draw(self, surface):
+        text_surface = font_buttons.render(self.text, True, Color_Text)
+        text_rectangle = text_surface.get_rect(center=self.rect.center)
+        pygame.draw.rect(surface, Color_Text, self.rect, 2, border_radius=4)
+        surface.blit(text_surface, text_rectangle)
+
+    def is_clicked(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                return True
+        return False
+
+# main menu function
+def main_menu():
+    button_width, button_height = 250, 50
+    center = 800 // 2 - button_width // 2
+
+    # menu buttons
+    start_button = Button('START GAME', center, 280, button_width, button_height)
+    instructions_button = Button('INSTRUCTIONS', center, 350, button_width, button_height)
+    quit_button = Button('QUIT GAME', center, 420, button_width, button_height)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if start_button.is_clicked(event):
+                print('Welcome to AnomalEEE...')
+
+            if instructions_button.is_clicked(event):
+                print('Opening Instructions Screen...')
+
+            if quit_button.is_clicked(event):
+                pygame.quit()
+                sys.exit()
+
+        # drawing      
+        screen.fill(Color_Background)
+        title_surface = font_title.render('AnomalEEE', True, Color_Title)
+        title_rectangle = title_surface.get_rect(center=(screen_width // 2, 150))
+        screen.blit(title_surface, title_rectangle)
+
+        subtitle_surface = font_subtitles.render('Verify who enters. Protect your sanity.', True, (120, 120, 130))
+        subtitle_rectangle = subtitle_surface.get_rect(center = (screen_width // 2, 205))
+        screen.blit(subtitle_surface, subtitle_rectangle)
+
+        start_button.draw(screen)
+        instructions_button.draw(screen)
+        quit_button.draw(screen)
+
+        pygame.display.flip()
+        clock = pygame.time.Clock()
+        clock.tick(60)
+
+def game():
+    clock = pygame.time.Clock()
+        
+if __name__ == '__main__':
+    main_menu()
 
 
 
