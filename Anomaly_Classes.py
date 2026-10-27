@@ -23,7 +23,7 @@ font_subtitles = pygame.font.SysFont('arial', 18, italic=True)
 class Button:
     def __init__(self, text, x, y, width, height):
         self.text = text
-        self.shape = pygame.Rect(x, y, width, height)
+        self.rect = pygame.Rect(x, y, width, height)
 
     def draw(self, surface):
         text_surface = font_buttons.render(self.text, True, Color_Text)
