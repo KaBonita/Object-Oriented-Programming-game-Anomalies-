@@ -66,11 +66,11 @@ def main_menu():
         # drawing      
         screen.fill(Color_Background)
         title_surface = font_title.render('AnomalEEE', True, Color_Title)
-        title_rectangle = title_surface.get_rect(800 // 2, 150)
+        title_rectangle = title_surface.get_rect(center=(screen_width // 2, 150))
         screen.blit(title_surface, title_rectangle)
 
         subtitle_surface = font_subtitles.render('Verify who enters. Protect your sanity.', True, (120, 120, 130))
-        subtitle_rectangle = subtitle_surface.get_rect(center = (800 // 2, 205))
+        subtitle_rectangle = subtitle_surface.get_rect(center = (screen_width // 2, 205))
         screen.blit(subtitle_surface, subtitle_rectangle)
 
         start_button.draw(screen)
