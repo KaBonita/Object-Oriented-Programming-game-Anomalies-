@@ -94,6 +94,8 @@ def game():
     no_button = Button('Human', 420, 380, 180, 45)
     
 
+    message = f'{chosen_individual} has approached the glass window. What will you do?'
+
     while sanity > 0:
         for event in pygame.event.get():
             if game == 'starting':
@@ -103,7 +105,7 @@ def game():
 
                 if inspect_button.is_clicked(event):
                     sanity -= ACTION_COST
-                    message = chosen_individual.inspect_appearance()
+                    new_message = chosen_individual.inspect_appearance()
                 elif talk_button.is_clicked(event):
                     game == 'talking'
 
@@ -117,23 +119,23 @@ def game():
                 for id, button in question_buttons:
                     if button.is_clicked(event):
                         sanity -= ACTION_COST
-                        message = chosen_individual.answer_question(id)
+                        new_message = chosen_individual.answer_question(id)
 
             elif game == 'deciding':
                 if back_button.is_clicked(event):
                     game == 'starting'
                 if yes_button.is_clicked(event):
                     if chosen_individual.anomaly_id is not None:
-                        message = 'You have guessed correctly.'
+                        new_message = 'You have guessed correctly.'
                     else:
-                        message = 'You have guessed incorrectly.'
+                        new_message = 'You have guessed incorrectly.'
                         sanity -= WRONG_GUESS_COST
                     return
                 if no_button.is_clicked(event):
                     if chosen_individual.anomaly_id is None:
-                        message = 'You have guessed correctly.'
+                        new_message = 'You have guessed correctly.'
                     else:
-                        message = 'You have guessed incorrectly.'
+                        new_message = 'You have guessed incorrectly.'
                     return
 
         # drawing buttons
