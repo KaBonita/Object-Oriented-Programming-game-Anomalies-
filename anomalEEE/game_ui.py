@@ -124,13 +124,47 @@ def game():
                     game == 'starting'
                 if yes_button.is_clicked(event):
                     if chosen_individual.anomaly_id is not None:
-                        message = 'You have gue ssed correctly.'
+                        message = 'You have guessed correctly.'
                     else:
                         message = 'You have guessed incorrectly.'
                         sanity -= WRONG_GUESS_COST
+                    return
                 if no_button.is_clicked(event):
                     if chosen_individual.anomaly_id is None:
                         message = 'You have guessed correctly.'
+                    else:
+                        message = 'You have guessed incorrectly.'
+                    return
+
+        # drawing buttons
+        screen.fill(Color_Background)
+
+        player_window = pygame.Rect(50, 60, 700, 200)
+        pygame.draw.rect(screen, (30, 30, 35), player_window, border_radius=6)
+        pygame.draw.rect(screen, Color_Text, player_window, 2, border_radius=6)
+        screen.blit(font_subtitles.render(f'Encountering: {chosen_individual.name.upper()}', True, Color_Title), (player_window.x + 20, player_window.y + 15))
+        screen.blit(font_subtitles.render(chosen_individual.backstory[:90] + '...', True, Color_Text), (player_window.x + 20, player_window.y +45))
+
+        dialogue = pygame.Rect(50, 275, 700, 220)
+        pygame.draw.rect(screen, (25, 25, 30), dialogue, border_radius=6)
+        pygame.draw.rect(screen, Color_Text, dialogue, 1, border_radius=6)
+        screen.blit(font_buttons.render(message[:70], True, Color_Text), (dialogue.x + 20, dialogue.y + 20))
+
+        if game == 'starting':
+            inspect_button.draw(screen)
+            talk_button.draw(screen)
+            decision_button.draw(screen)
+
+        elif game == 'talking':
+            for _, button in question_buttons:
+                button.draw(screen)
+            back_button.draw(screen)
+
+        elif game == 'deciding':
+            screen.blit(font.buttons.render('Is this individual an anomaly or not?', True, Color_Text), (220, 320))
+            yes_button.draw(screen)
+            no_button.draw(screen)
+            back_button.draw(screen)
         
         pygame.display.flip()
         clock.tick(60)
@@ -179,3 +213,5 @@ def main_menu():
         clock = pygame.time.Clock()
         clock.tick(60)
 
+if __name__ == '__main__':
+    main_menu()

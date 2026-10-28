@@ -1,15 +1,14 @@
 import time
 import random
 import sys
-from game_ui import main_menu
 
 START_SANITY = 100
 ACTION_COST = 5
 WRONG_GUESS_COST = 20
 
 questions = {1: "Where have you come from?",
-             2: "Why should I let you in?",
-             3: "Have you noticed anything unusual about yourself lately?",
+                2: "Why should I let you in?",
+                3: "Have you noticed anything unusual about yourself lately?",
              4: "Where were you when the first outbreak occurred?",
              5: "Is there anyone waiting for you inside?"}
 
@@ -18,7 +17,7 @@ questions = {1: "Where have you come from?",
 #_____________________________________________________________
 
 class Individual:
-    # All anomaly defenitions.
+     # All anomaly defenitions.
     ANOMALIES = {
         #Speech Anomalies
         1: "Delayed Speech",
@@ -364,9 +363,6 @@ class Ghouster(Individual):
                 4: "I was at school with my friends. We were just finishing up some lab work before heading \nhome. I kinda wish we got to talk before everything went down.",
                 5: "No. I'm still looking for my friends and my family. Didn't expect to see you here, though... \nhaha guess we're really not getting rid of each other that easily?",
             }, anomaly_id=anomaly_id,)
-
-if __name__ == '__main__':
-    main_menu()
 
 # Test dito:
 
