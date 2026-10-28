@@ -189,7 +189,7 @@ def game():
             dialogue_y = dialogue.y + 20
             for i in range(len(wrapped_dialogue)):
                 line_surface = wrapped_dialogue[i]
-                screen.blit(line_surface, (dialogue.x + 20, dialogue_y + (i * 40)))
+                screen.blit(line_surface, (dialogue.x + 20, dialogue_y + (i * 45)))
 
         if game == 'starting':
             inspect_button.draw(screen)
