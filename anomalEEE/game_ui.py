@@ -107,14 +107,14 @@ def game():
                     sanity -= ACTION_COST
                     new_message = chosen_individual.inspect_appearance()
                 elif talk_button.is_clicked(event):
-                    game == 'talking'
+                    game = 'talking'
 
                 elif decision_button.is_clicked(event):
-                    game == 'deciding'
+                    game = 'deciding'
 
             elif game == 'talking':
                 if back_button.is_clicked(event):
-                    game == 'starting'
+                    game = 'starting'
 
                 for id, button in question_buttons:
                     if button.is_clicked(event):
@@ -123,7 +123,7 @@ def game():
 
             elif game == 'deciding':
                 if back_button.is_clicked(event):
-                    game == 'starting'
+                    game = 'starting'
                 if yes_button.is_clicked(event):
                     if chosen_individual.anomaly_id is not None:
                         new_message = 'You have guessed correctly.'
