@@ -94,7 +94,7 @@ def game():
     no_button = Button('Human', 420, 380, 180, 45)
     
 
-    message = f'{chosen_individual} has approached the glass window. What will you do?'
+    message = f'{chosen_individual.name} has approached the glass window. What will you do?'
 
     while sanity > 0:
         for event in pygame.event.get():
