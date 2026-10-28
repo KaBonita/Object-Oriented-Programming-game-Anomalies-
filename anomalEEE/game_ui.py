@@ -54,6 +54,33 @@ class Button:
                 return True
         return False
 
+def wrap_text(text, font, color, maxwidth):
+    # for wrapping rendered text
+    
+    words = text.split(' ')
+    lines = []
+    current_line = ''
+
+    for word in words:
+        test = current_line + word + ' '
+        line_width = font.size(test)[0]
+
+        if line_width <= maxwidth:
+            current_line = test
+        else: 
+            lines.append(current_line)
+            current_line = word + ' '
+
+    if current_line != '':
+        lines.append(current_line)
+
+    rendered = []
+    for line_text in lines:
+        surface = font.render(line_text, True, color)
+        rendered.append(surface)
+
+    return rendered
+    
 def game():
     clock = pygame.time.Clock()
 
@@ -120,6 +147,7 @@ def game():
                     if button.is_clicked(event):
                         sanity -= ACTION_COST
                         message = chosen_individual.answer_question(id)
+                        game = 'starting'
 
             elif game == 'deciding':
                 if back_button.is_clicked(event):
@@ -145,12 +173,23 @@ def game():
         pygame.draw.rect(screen, (30, 30, 35), player_window, border_radius=6)
         pygame.draw.rect(screen, Color_Text, player_window, 2, border_radius=6)
         screen.blit(font_subtitles.render(f'Encountering: {chosen_individual.name.upper()}', True, Color_Title), (player_window.x + 20, player_window.y + 15))
-        screen.blit(font_subtitles.render(chosen_individual.backstory[:90] + '...', True, Color_Text), (player_window.x + 20, player_window.y +45))
+
+        wrapped = wrap_text(chosen_individual.backstory, font_subtitles, Color_Text, 660)
+        start_y = player_window.y + 50
+        for i in range(len(wrapped)):
+            line_surface = wrapped[i]
+            screen.blit(line_surface, (player_window.x + 20, start_y + (i * 40)))
 
         dialogue = pygame.Rect(50, 275, 700, 220)
         pygame.draw.rect(screen, (25, 25, 30), dialogue, border_radius=6)
         pygame.draw.rect(screen, Color_Text, dialogue, 1, border_radius=6)
-        screen.blit(font_buttons.render(message[:70], True, Color_Text), (dialogue.x + 20, dialogue.y + 20))
+
+        if game != 'talking':
+            wrapped_dialogue = wrap_text(message, font_buttons, Color_Text, 660)
+            dialogue_y = dialogue.y + 20
+            for i in range(len(wrapped_dialogue)):
+                line_surface = wrapped_dialogue[i]
+                screen.blit(line_surface, (dialogue.x + 20, dialogue_y + (i * 40)))
 
         if game == 'starting':
             inspect_button.draw(screen)
@@ -160,7 +199,7 @@ def game():
         elif game == 'talking':
             for _, button in question_buttons:
                 button.draw(screen)
-            back_button.draw(screen)
+            back_button.draw(screen)    
 
         elif game == 'deciding':
             screen.blit(font_buttons.render('Is this individual an anomaly or not?', True, Color_Text), (220, 320))
