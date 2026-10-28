@@ -2,7 +2,7 @@ import sys
 import pygame
 import random
 
-from Anomaly_Classes import(Individual, Pandemic_Survivor_1, Doctor, Dorothea, Walang_Pagkain_Buseng, Bata_Bata, Politician, Tomboy_Iskrambol, Hi_Vlog_Welcome_To_My_Guys, Ghouster, Bleeding_Love, questions, START_SANITY, ACTION_COST, WRONG_GUESS_COST)
+from Anomaly_Classes import Individual, Pandemic_Survivor_1, Doctor, Dorothea, Tomboy_Iskrambol, Hi_Vlog_Welcome_To_My_Guys, Bata_Bata, Politician, Walang_Pagkain_Buseng, Bleeding_Love, Ghouster, questions, START_SANITY, ACTION_COST, WRONG_GUESS_COST
 
 pygame.init()
 screen_width = 800
@@ -46,7 +46,7 @@ def game():
     choose_char = random.choice(characters)
     has_anomaly = random.choice([True, False])
     anomaly = random.randint(1, 11) if has_anomaly else None
-    individual = choose_char(anomaly_id=anomaly)
+    chosen_individual = choose_char(anomaly_id=anomaly)
     sanity = START_SANITY
 
     game = 'starting'
@@ -70,10 +70,13 @@ def game():
     while sanity > 0:
         for event in pygame.event.get():
             if game == 'starting':
+                inspect_button.draw(screen)
+                talk_button.draw(screen)
+                decision_button.draw(screen)
 
                 if inspect_button.is_clicked(event):
                     sanity -= ACTION_COST
-                    message = individual.inspect_appearance()
+                    message = chosen_individual.inspect_appearance()
                 elif talk_button.is_clicked(event):
                     game == 'talking'
 
@@ -87,19 +90,23 @@ def game():
                 for id, button in question_buttons:
                     if button.is_clicked(event):
                         sanity -= ACTION_COST
-                        message = individual.answer_question(id)
+                        message = chosen_individual.answer_question(id)
 
             elif game == 'deciding':
                 if back_button.is_clicked(event):
                     game == 'starting'
                 if yes_button.is_clicked(event):
-                    if individual.anomaly_id is not None:
-                        message = 
-
+                    if chosen_individual.anomaly_id is not None:
+                        message = 'You have gue ssed correctly.'
+                    else:
+                        message = 'You have guessed incorrectly.'
+                        sanity -= WRONG_GUESS_COST
+                if no_button.is_clicked(event):
+                    if chosen_individual.anomaly_id is None:
+                        message = 'You have guessed correctly.'
         
-
-    pygame.display.flip()
-    clock.tick(60)
+        pygame.display.flip()
+        clock.tick(60)
 
 # main menu function
 def main_menu():
