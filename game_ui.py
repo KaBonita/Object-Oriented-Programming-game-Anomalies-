@@ -50,15 +50,53 @@ def game():
     sanity = START_SANITY
 
     game = 'starting'
+
     # action buttons
     inspect_button = Button('Inspect Individual', 50, 520, 220, 40)
     talk_button = Button('Talk to the Individual', 290, 520, 220, 40)
     decision_button = Button('Anomaly or Not?', 530, 520, 220, 40)
 
-    if game == 'starting':
-        inspect_button.draw(screen)
-        talk_button.draw(screen)
-        decision_button.draw(screen)
+    # talk/question buttons
+    question_buttons = []
+    for id, dialogues in questions.items():
+        question_buttons.append((id, Button(f'Q{id}: {dialogues[:40]}...', 50, 290 + (id * 40), 500, 35)))
+        back_button = Button('Back', 570, 520, 180, 40)
+
+    # decisions
+    yes_button = Button('Anomaly', 200, 380, 140, 45)
+    no_button = Button('Human', 420, 380, 180, 45)
+    
+
+    while sanity > 0:
+        for event in pygame.event.get():
+            if game == 'starting':
+
+                if inspect_button.is_clicked(event):
+                    sanity -= ACTION_COST
+                    message = individual.inspect_appearance()
+                elif talk_button.is_clicked(event):
+                    game == 'talking'
+
+                elif decision_button.is_clicked(event):
+                    game == 'deciding'
+
+            elif game == 'talking':
+                if back_button.is_clicked(event):
+                    game == 'starting'
+
+                for id, button in question_buttons:
+                    if button.is_clicked(event):
+                        sanity -= ACTION_COST
+                        message = individual.answer_question(id)
+
+            elif game == 'deciding':
+                if back_button.is_clicked(event):
+                    game == 'starting'
+                if yes_button.is_clicked(event):
+                    if individual.anomaly_id is not None:
+                        message = 
+
+        
 
     pygame.display.flip()
     clock.tick(60)
