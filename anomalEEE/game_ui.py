@@ -105,7 +105,7 @@ def game():
 
                 if inspect_button.is_clicked(event):
                     sanity -= ACTION_COST
-                    new_message = chosen_individual.inspect_appearance()
+                    message = chosen_individual.inspect_appearance()
                 elif talk_button.is_clicked(event):
                     game = 'talking'
 
@@ -119,23 +119,23 @@ def game():
                 for id, button in question_buttons:
                     if button.is_clicked(event):
                         sanity -= ACTION_COST
-                        new_message = chosen_individual.answer_question(id)
+                        message = chosen_individual.answer_question(id)
 
             elif game == 'deciding':
                 if back_button.is_clicked(event):
                     game = 'starting'
                 if yes_button.is_clicked(event):
                     if chosen_individual.anomaly_id is not None:
-                        new_message = 'You have guessed correctly.'
+                        message = 'You have guessed correctly.'
                     else:
-                        new_message = 'You have guessed incorrectly.'
+                        message = 'You have guessed incorrectly.'
                         sanity -= WRONG_GUESS_COST
                     return
                 if no_button.is_clicked(event):
                     if chosen_individual.anomaly_id is None:
-                        new_message = 'You have guessed correctly.'
+                        message = 'You have guessed correctly.'
                     else:
-                        new_message = 'You have guessed incorrectly.'
+                        message = 'You have guessed incorrectly.'
                     return
 
         # drawing buttons
@@ -163,7 +163,7 @@ def game():
             back_button.draw(screen)
 
         elif game == 'deciding':
-            screen.blit(font.buttons.render('Is this individual an anomaly or not?', True, Color_Text), (220, 320))
+            screen.blit(font_buttons.render('Is this individual an anomaly or not?', True, Color_Text), (220, 320))
             yes_button.draw(screen)
             no_button.draw(screen)
             back_button.draw(screen)
@@ -180,6 +180,8 @@ def main_menu():
     start_button = Button('START GAME', center, 280, button_width, button_height)
     instructions_button = Button('INSTRUCTIONS', center, 350, button_width, button_height)
     quit_button = Button('QUIT GAME', center, 420, button_width, button_height)
+
+    clock = pygame.time.Clock()
 
     while True:
         for event in pygame.event.get():
@@ -212,7 +214,6 @@ def main_menu():
         quit_button.draw(screen)
 
         pygame.display.flip()
-        clock = pygame.time.Clock()
         clock.tick(60)
 
 if __name__ == '__main__':
