@@ -37,7 +37,32 @@ class Button:
             if self.rect.collidepoint(event.pos):
                 return True
         return False
-    
+
+def game():
+    clock = pygame.time.Clock()
+
+    # pick individual to approach the player and decide whether anomalous or not
+    characters = [Pandemic_Survivor_1, Doctor, Dorothea, Bleeding_Love, Politician, Hi_Vlog_Welcome_To_My_Guys, Walang_Pagkain_Buseng, Ghouster, Bata_Bata, Tomboy_Iskrambol]
+    choose_char = random.choice(characters)
+    has_anomaly = random.choice([True, False])
+    anomaly = random.randint(1, 11) if has_anomaly else None
+    individual = choose_char(anomaly_id=anomaly)
+    sanity = START_SANITY
+
+    game = 'starting'
+    # action buttons
+    inspect_button = Button('Inspect Individual', 50, 520, 220, 40)
+    talk_button = Button('Talk to the Individual', 290, 520, 220, 40)
+    decision_button = Button('Anomaly or Not?', 530, 520, 220, 40)
+
+    if game == 'starting':
+        inspect_button.draw(screen)
+        talk_button.draw(screen)
+        decision_button.draw(screen)
+
+    pygame.display.flip()
+    clock.tick(60)
+
 # main menu function
 def main_menu():
     button_width, button_height = 250, 50
@@ -55,7 +80,7 @@ def main_menu():
                 sys.exit()
 
             if start_button.is_clicked(event):
-                print('Welcome to AnomalEEE...')
+                game()
 
             if instructions_button.is_clicked(event):
                 print('Opening Instructions Screen...')
@@ -82,12 +107,3 @@ def main_menu():
         clock = pygame.time.Clock()
         clock.tick(60)
 
-def game():
-    clock = pygame.time.Clock()
-    characters = [Pandemic_Survivor_1, Doctor, Dorothea, Bleeding_Love, Politician, Hi_Vlog_Welcome_To_My_Guys, Walang_Pagkain_Buseng, Ghouster, Bata_Bata, Tomboy_Iskrambol]
-    choose_char = random.choice(characters)
-    has_anomaly = random.choice([True, False])
-    anomaly = random.randint(1, 11) if has_anomaly else None
-    individual = choose_char(anomaly_id=anomaly)
-    sanity = START_SANITY
-    
