@@ -2,8 +2,24 @@ import sys
 import pygame
 import random
 
-from Anomaly_Classes import Individual, Pandemic_Survivor_1, Doctor, Dorothea, Tomboy_Iskrambol, Hi_Vlog_Welcome_To_My_Guys, Bata_Bata, Politician, Walang_Pagkain_Buseng, Bleeding_Love, Ghouster, questions, START_SANITY, ACTION_COST, WRONG_GUESS_COST
-
+from Anomaly_Classes import (
+    Individual,
+    Pandemic_Survivor_1,
+    Walang_Pagkain_Buseng,
+    Doctor,
+    Politician,
+    Bleeding_Love,
+    Dorothea,
+    Bata_Bata,
+    Tomboy_Iskrambol,
+    Hi_Vlog_Welcome_To_My_Guys,
+    Ghouster,
+    questions,
+    START_SANITY,
+    ACTION_COST,
+    WRONG_GUESS_COST
+)
+    
 pygame.init()
 screen_width = 800
 screen_height = 600
@@ -42,8 +58,19 @@ def game():
     clock = pygame.time.Clock()
 
     # pick individual to approach the player and decide whether anomalous or not
-    characters = [Pandemic_Survivor_1, Doctor, Dorothea, Bleeding_Love, Politician, Hi_Vlog_Welcome_To_My_Guys, Walang_Pagkain_Buseng, Ghouster, Bata_Bata, Tomboy_Iskrambol]
-    choose_char = random.choice(characters)
+    character_classes = [
+        Pandemic_Survivor_1,
+        Walang_Pagkain_Buseng,
+        Doctor,
+        Politician,
+        Bleeding_Love,
+        Dorothea,
+        Bata_Bata,
+        Tomboy_Iskrambol,
+        Hi_Vlog_Welcome_To_My_Guys,
+        Ghouster
+    ]
+    choose_char = random.choice(character_classes)
     has_anomaly = random.choice([True, False])
     anomaly = random.randint(1, 11) if has_anomaly else None
     chosen_individual = choose_char(anomaly_id=anomaly)
